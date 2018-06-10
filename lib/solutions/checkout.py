@@ -3,6 +3,13 @@
 # noinspection PyUnusedLocal
 # skus = unicode string
 
+PRICES = {
+    "A":50,
+    "B":30,
+    "C":20,
+    "D":15,
+}
+
 def skus_is_valid(skus):
     for x in skus:
         if str(x).upper() not in "ABCD":
@@ -10,16 +17,11 @@ def skus_is_valid(skus):
     return True
 
 def checkout(skus):
-    prices = {
-        "A":50,
-        "B":30,
-        "C":20,
-        "D":15,
-    }
+
     if skus_is_valid:
-        pass
-    else:
-        return -1
+        result = sum(PRICES[str(x).upper()] for x in list(str(skus)))
+        return result
+    return -1
 
 
 # Testing
