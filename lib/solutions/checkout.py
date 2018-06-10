@@ -31,13 +31,15 @@ def checkout(skus):
 
     if skus_is_valid(skus):
         skus_dict = count_skus(skus)
-        for rule, value in RULES.items():
-            qty = skus_dict.get(rule, None)
+        for chck_item, value in RULES.items():
+            qty = skus_dict.get(chck_item, None)
             if qty:
                 quot = qty / value[0]
                 remain = qty % value[0]
-                print('+ remain: {}'.format(remain))
-                print('+ quot: {}'.format(quot))
+                result += quot * value[1]
+                result += remain * PRICES.get(chck_item, None)
+                # print('+ remain: {}'.format(remain))
+                # print('+ quot: {}'.format(quot))
 
         return result
     return -1
