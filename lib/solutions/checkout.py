@@ -25,24 +25,27 @@ def skus_is_valid(skus):
 def count_skus(skus):
     return Counter(skus)
 
+def calculated_specials(skus):
+    result = 0
+    skus_dict = count_skus(skus)
+
+    for chck_item, value in RULES.items():
+        qty = skus_dict.get(chck_item, None)
+        if qty:
+            quot = qty / value[0]
+            remain = qty % value[0]
+            result += quot * value[1]
+            result += remain * PRICES.get(chck_item, None)
+    return result
+
 def checkout(skus):
     skus = skus.upper()
-    result = 0
-
     if skus_is_valid(skus):
-        skus_dict = count_skus(skus)
-        for chck_item, value in RULES.items():
-            qty = skus_dict.get(chck_item, None)
-            if qty:
-                quot = qty / value[0]
-                remain = qty % value[0]
-                result += quot * value[1]
-                result += remain * PRICES.get(chck_item, None)
-                # print('+ remain: {}'.format(remain))
-                # print('+ quot: {}'.format(quot))
-
+        result = calculated_specials(skus)
         return result
-    return -1
+    else:
+        return -1
+
 
 
 # Testing
