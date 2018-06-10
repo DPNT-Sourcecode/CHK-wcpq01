@@ -2,6 +2,7 @@
 
 # noinspection PyUnusedLocal
 # skus = unicode string
+from collections import Counter
 
 PRICES = {
     "A": 50,
@@ -11,27 +12,40 @@ PRICES = {
 }
 
 RULES = {
-    "AAA": 130,
-    "BB": 45
+    "A": [3, 130],
+    "B": [2, 45]
 }
 
 def skus_is_valid(skus):
     for x in skus:
-        if str(x).upper() not in "ABCD":
+        if x not in "ABCD":
             return False
     return True
 
+def count_skus(skus):
+    return Counter(skus)
+
 def checkout(skus):
+    skus = skus.upper()
+    result = 0
 
     if skus_is_valid(skus):
-        result = sorted(list(str(skus)))
-        # result = sum(PRICES[str(x).upper()] for x in list(str(skus)))
+        skus_dict = count_skus(skus)
+        for rule, value in RULES.items():
+            qty = skus_dict.get(rule, None)
+            if qty:
+                quot = qty / value[0]
+                remain = qty % value[0]
+                print('+ remain: {}'.format(remain))
+                print('+ quot: {}'.format(quot))
+
         return result
     return -1
 
 
 # Testing
 if __name__ == '__main__':
+    print "AAABB = {}, expected: B".format(checkout("AAABBB"))
     print "AfBD = {}, expected: -1".format(checkout("AfBD"))
     print "AB = {}, expected: 80".format(checkout("AB"))
     print "AAA = {}, expected: 130".format(checkout("AAA"))
