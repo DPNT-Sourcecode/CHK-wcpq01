@@ -18,7 +18,7 @@ def skus_is_valid(skus):
 
 def checkout(skus):
 
-    if skus_is_valid:
+    if skus_is_valid(skus):
         result = sum(PRICES[str(x).upper()] for x in list(str(skus)))
         return result
     return -1
@@ -28,6 +28,9 @@ def checkout(skus):
 if __name__ == '__main__':
     print "AfBD = {}, expected: -1".format(checkout("AfBD"))
     print "AB = {}, expected: 80".format(checkout("AB"))
+    print "AAA = {}, expected: 130".format(checkout("AAA"))
+    print "BB = {}, expected: 45".format(checkout("BB"))
+    print "AAABB = {}, expected: 175".format(checkout("AAABB"))
 
 
 # id = CHK_R1_003, req = checkout(""), resp = -1,
