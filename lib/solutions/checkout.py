@@ -4,10 +4,15 @@
 # skus = unicode string
 
 PRICES = {
-    "A":50,
-    "B":30,
-    "C":20,
-    "D":15,
+    "A": 50,
+    "B": 30,
+    "C": 20,
+    "D": 15,
+}
+
+RULES = {
+    "AAA": 130,
+    "BB": 45
 }
 
 def skus_is_valid(skus):
@@ -19,7 +24,8 @@ def skus_is_valid(skus):
 def checkout(skus):
 
     if skus_is_valid(skus):
-        result = sum(PRICES[str(x).upper()] for x in list(str(skus)))
+        result = sorted(list(str(skus)))
+        # result = sum(PRICES[str(x).upper()] for x in list(str(skus)))
         return result
     return -1
 
